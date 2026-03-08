@@ -3,63 +3,257 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Launch Control: enjinn66</title>
+    <title>Launch Control: Solocked Studios</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0d1117; color: #c9d1d9; padding: 40px; line-height: 1.6; }
-        .container { max-width: 800px; margin: auto; background: #161b22; padding: 30px; border-radius: 10px; border: 1px solid #30363d; }
-        h1 { color: #58a6ff; text-align: center; text-transform: uppercase; letter-spacing: 2px; }
-        h2 { color: #ff7b72; border-bottom: 1px solid #30363d; padding-bottom: 10px; margin-top: 30px; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0f111a; color: #c9d1d9; padding: 40px; line-height: 1.6; font-size: 15px; }
+        .container { max-width: 900px; margin: auto; background: #161b22; padding: 40px; border-radius: 12px; border: 1px solid #30363d; box-shadow: 0 8px 24px rgba(0,0,0,0.5); }
+        h1 { color: #58a6ff; text-align: center; text-transform: uppercase; letter-spacing: 2px; border-bottom: 2px solid #30363d; padding-bottom: 20px;}
+        h2 { color: #ff7b72; margin-top: 40px; border-bottom: 1px solid #30363d; padding-bottom: 10px; font-size: 1.5em; }
         h2.important { color: #d2a8ff; }
-        .task-group { margin-bottom: 25px; }
-        .task-title { font-weight: bold; font-size: 1.1em; margin-bottom: 10px; color: #e6edf3; }
-        .criteria { font-size: 0.9em; color: #8b949e; margin-bottom: 10px; font-style: italic; }
-        label { display: flex; align-items: flex-start; margin-bottom: 8px; cursor: pointer; padding: 5px; border-radius: 5px; transition: background 0.2s; }
+        .rules { background: #21262d; padding: 15px; border-radius: 8px; border-left: 4px solid #58a6ff; margin-bottom: 30px; font-size: 0.95em; }
+        .task-group { margin-bottom: 35px; }
+        .task-title { font-weight: bold; font-size: 1.2em; margin-bottom: 5px; color: #e6edf3; }
+        .task-desc { font-size: 0.9em; color: #8b949e; margin-bottom: 15px; font-style: italic; }
+        .pass-condition { background: #0d1117; padding: 10px; border-radius: 6px; border-left: 3px solid #238636; font-size: 0.9em; margin-top: 15px; color: #a5d6ff; }
+        label { display: flex; align-items: flex-start; margin-bottom: 10px; cursor: pointer; padding: 6px; border-radius: 6px; transition: background 0.2s; }
         label:hover { background: #21262d; }
-        input[type="checkbox"] { margin-top: 5px; margin-right: 15px; width: 18px; height: 18px; accent-color: #238636; cursor: pointer; }
-        .checked-text { text-decoration: line-through; color: #8b949e; }
-        .status { text-align: center; margin-bottom: 20px; font-size: 0.9em; color: #8b949e; }
+        input[type="checkbox"] { margin-top: 4px; margin-right: 15px; width: 18px; height: 18px; accent-color: #238636; cursor: pointer; flex-shrink: 0; }
+        .checked-text { text-decoration: line-through; color: #6e7681; }
+        .status { text-align: center; margin-bottom: 20px; font-size: 1em; font-weight: bold; padding: 10px; border-radius: 8px; background: #0d1117; }
+        
+        .decision-block { display: flex; gap: 20px; margin-top: 40px; }
+        .card { flex: 1; padding: 20px; border-radius: 8px; background: #0d1117; border: 1px solid #30363d; }
+        .green { border-top: 4px solid #238636; }
+        .yellow { border-top: 4px solid #d29922; }
+        .red { border-top: 4px solid #f85149; }
+        .card h3 { margin-top: 0; }
     </style>
 </head>
 <body>
 
 <div class="container">
     <h1>Pre-Launch Flight Check</h1>
-    <p class="status" id="connection-status">Connecting to database...</p>
-    <p style="text-align: center; color: #8b949e;">Launch only if every Hard Blocker passes. Max 1 fail in Important section.</p>
+    <div class="status" id="connection-status" style="color: #d29922;">🟡 Connecting to Firebase Database...</div>
+    
+    <div class="rules">
+        <strong>Launch rule:</strong> Launch only if every Hard Blocker passes. For the Important section, allow at most 1 fail, and only if it has a clear post-launch fix that does not affect spending, saving, or first-session clarity.
+    </div>
 
     <h2>Hard Blockers</h2>
     
     <div class="task-group">
-        <div class="task-title">1. New group-owned universe is fully wired</div>
-        <label><input type="checkbox" id="hb1-1"> <span>All developer product IDs point to new experience</span></label>
-        <label><input type="checkbox" id="hb1-2"> <span>All game pass IDs point to new experience</span></label>
-        <label><input type="checkbox" id="hb1-3"> <span>All VIP checks work</span></label>
-        <label><input type="checkbox" id="hb1-4"> <span>Private server settings configured</span></label>
-        <label><input type="checkbox" id="hb1-5"> <span>Max players = 6</span></label>
-        <label><input type="checkbox" id="hb1-6"> <span>No old universe IDs remain anywhere</span></label>
-        <label><input type="checkbox" id="hb1-7"> <span>enjinn66 has full edit/publish permissions</span></label>
+        <div class="task-title">1) New group-owned universe is fully wired</div>
+        <label><input type="checkbox" id="hb1-1"> <span>All developer product IDs in code/UI point to the new group-owned experience</span></label>
+        <label><input type="checkbox" id="hb1-2"> <span>All game pass IDs point to the new experience</span></label>
+        <label><input type="checkbox" id="hb1-3"> <span>All VIP checks work on the new experience</span></label>
+        <label><input type="checkbox" id="hb1-4"> <span>All private server settings are configured on the new experience</span></label>
+        <label><input type="checkbox" id="hb1-5"> <span>Max players = 6 is set correctly</span></label>
+        <label><input type="checkbox" id="hb1-6"> <span>No old universe/place IDs remain in scripts, configs, webhooks, API tools, or dashboards</span></label>
+        <label><input type="checkbox" id="hb1-7"> <span>enjinn66 can still open, edit, and publish the group-owned experience without permission issues</span></label>
+        <div class="pass-condition">Pass condition: every monetization/system reference points to the new universe, and nothing still depends on the old personal experience.</div>
     </div>
 
     <div class="task-group">
-        <div class="task-title">2. Monetization works end-to-end</div>
-        <div class="criteria">Zero misgrants, zero duplicate grants, zero "paid but didn't get it" cases.</div>
-        <label><input type="checkbox" id="hb2-1"> <span>Purchase prompt appears correctly for all items</span></label>
-        <label><input type="checkbox" id="hb2-2"> <span>Product grants correct reward once only</span></label>
-        <label><input type="checkbox" id="hb2-3"> <span>Rejoining does not duplicate or remove it</span></label>
-        <label><input type="checkbox" id="hb2-4"> <span>Rebirth interaction works as intended</span></label>
-        <label><input type="checkbox" id="hb2-5"> <span>Server hop does not break reward</span></label>
-        <label><input type="checkbox" id="hb2-6"> <span>Cancelled purchase grants nothing</span></label>
+        <div class="task-title">2) Monetization works end-to-end</div>
+        <div class="task-desc">Test every live launch product: Founder’s Pack, VIP, Collect All, Server Luck, Admin Weather, Currency packs, Claw purchases, Any quick-buy pad offer.</div>
+        <label><input type="checkbox" id="hb2-1"> <span>Purchase prompt appears correctly</span></label>
+        <label><input type="checkbox" id="hb2-2"> <span>Product grants the correct reward</span></label>
+        <label><input type="checkbox" id="hb2-3"> <span>Reward is granted once only</span></label>
+        <label><input type="checkbox" id="hb2-4"> <span>Rejoining does not duplicate or remove it incorrectly</span></label>
+        <label><input type="checkbox" id="hb2-5"> <span>Rebirth interaction works as intended</span></label>
+        <label><input type="checkbox" id="hb2-6"> <span>Server hop does not break the reward</span></label>
+        <label><input type="checkbox" id="hb2-7"> <span>Failed/cancelled purchase does not misgrant anything</span></label>
+        <div class="pass-condition">Pass condition: zero misgrants, zero duplicate grants, zero “paid but didn’t get it” cases.</div>
+    </div>
+
+    <div class="task-group">
+        <div class="task-title">3) First 10 minutes are clear</div>
+        <div class="task-desc">Use tomorrow’s final playtest for this.</div>
+        <label><input type="checkbox" id="hb3-1"> <span>New players understand how to earn money within 2 minutes</span></label>
+        <label><input type="checkbox" id="hb3-2"> <span>New players understand what claws do without explanation from you</span></label>
+        <label><input type="checkbox" id="hb3-3"> <span>New players understand what rebirth does before session end</span></label>
+        <label><input type="checkbox" id="hb3-4"> <span>New players can identify their next goal at all times</span></label>
+        <label><input type="checkbox" id="hb3-5"> <span>No tester says some version of “I don’t know what I’m supposed to do”</span></label>
+        <label><input type="checkbox" id="hb3-6"> <span>The first session has at least one exciting moment or visible milestone</span></label>
+        <div class="pass-condition">Pass condition: players always know what the next step is, and the opening loop feels sticky, not confusing.</div>
+    </div>
+
+    <div class="task-group">
+        <div class="task-title">4) Pacing is validated after the rebalance</div>
+        <div class="task-desc">Run at least: average luck path, lucky path, very lucky path.</div>
+        <label><input type="checkbox" id="hb4-1"> <span>Average path does not reach endgame too fast</span></label>
+        <label><input type="checkbox" id="hb4-2"> <span>Lucky path progresses faster but does not invalidate the claw ladder</span></label>
+        <label><input type="checkbox" id="hb4-3"> <span>Very lucky path still respects rebirth/claw gates</span></label>
+        <label><input type="checkbox" id="hb4-4"> <span>Late game does not become a dead brick wall too early</span></label>
+        <label><input type="checkbox" id="hb4-5"> <span>There is no obvious “broken” progression skip from one lucky pull</span></label>
+        <div class="pass-condition">Pass condition: lucky players feel rewarded, but no path trivializes the game or stalls into misery.</div>
     </div>
 
     <h2 class="important">Important</h2>
 
     <div class="task-group">
-        <div class="task-title">5. Claw locks and gates are readable</div>
-        <label><input type="checkbox" id="imp5-1"> <span>Locked claws clearly show price & rebirth reqs</span></label>
-        <label><input type="checkbox" id="imp5-2"> <span>Unique brainrot requirements are visible</span></label>
-        <label><input type="checkbox" id="imp5-3"> <span>Players understand why it's locked & how to unlock</span></label>
+        <div class="task-title">5) Claw locks and gates are readable</div>
+        <label><input type="checkbox" id="imp5-1"> <span>Locked claws clearly show price</span></label>
+        <label><input type="checkbox" id="imp5-2"> <span>Locked claws clearly show rebirth requirement</span></label>
+        <label><input type="checkbox" id="imp5-3"> <span>Locked claws clearly show unique brainrot requirement</span></label>
+        <label><input type="checkbox" id="imp5-4"> <span>Players understand why the claw is locked</span></label>
+        <label><input type="checkbox" id="imp5-5"> <span>Players know what to do next to unlock it</span></label>
+        <div class="pass-condition">Pass condition: no confusion, no “why can’t I buy this?” moments.</div>
     </div>
 
     <div class="task-group">
-        <div class="task-title">10. Top 3 Launch Risks Known</div>
-        <label><input type="checkbox" id="imp10-1"> <span>We
+        <div class="task-title">6) Minimum analytics are in place</div>
+        <div class="task-desc">You do not need big-studio analytics, but you need enough to not guess blindly.</div>
+        <label><input type="checkbox" id="imp6-1"> <span>You can track session start / session length</span></label>
+        <label><input type="checkbox" id="imp6-2"> <span>You can track first rebirth</span></label>
+        <label><input type="checkbox" id="imp6-3"> <span>You can track claw unlock progression</span></label>
+        <label><input type="checkbox" id="imp6-4"> <span>You can track shop opens</span></label>
+        <label><input type="checkbox" id="imp6-5"> <span>You can track purchase events</span></label>
+        <label><input type="checkbox" id="imp6-6"> <span>You can identify where players drop off</span></label>
+        <div class="pass-condition">Pass condition: after launch, you will be able to answer what players are doing instead of relying on vibes.</div>
+    </div>
+
+    <div class="task-group">
+        <div class="task-title">7) Monetization/world presentation is not too dense</div>
+        <label><input type="checkbox" id="imp7-1"> <span>The game fantasy is visible before the shop dominates attention</span></label>
+        <label><input type="checkbox" id="imp7-2"> <span>Quick-buy pads do not overwhelm the world</span></label>
+        <label><input type="checkbox" id="imp7-3"> <span>Players do not feel spammed by monetization surfaces</span></label>
+        <label><input type="checkbox" id="imp7-4"> <span>Founder’s Pack / VIP / key offers are clear without making the whole game feel pay-to-win</span></label>
+        <label><input type="checkbox" id="imp7-5"> <span>The claw shop feels optional, not like the intended route</span></label>
+        <div class="pass-condition">Pass condition: the game feels like a game first, shop second.</div>
+    </div>
+
+    <div class="task-group">
+        <div class="task-title">8) Post-launch plan exists before launch</div>
+        <label><input type="checkbox" id="imp8-1"> <span>You know what your first update is</span></label>
+        <label><input type="checkbox" id="imp8-2"> <span>You know what your first rotated pad offers will be</span></label>
+        <label><input type="checkbox" id="imp8-3"> <span>You know what feature is intentionally being saved for later</span></label>
+        <label><input type="checkbox" id="imp8-4"> <span>You know what metrics will determine whether launch is healthy</span></label>
+        <div class="pass-condition">Pass condition: launch is the start of a plan, not the end of one.</div>
+    </div>
+
+    <div class="task-group">
+        <div class="task-title">9) Launch stays policy-simple</div>
+        <div class="task-desc">Since you are not adding lootboxes/wheels yet:</div>
+        <label><input type="checkbox" id="imp9-1"> <span>No paid random item systems are live at launch</span></label>
+        <label><input type="checkbox" id="imp9-2"> <span>No hidden policy-sensitive monetization is sneaking in indirectly</span></label>
+        <label><input type="checkbox" id="imp9-3"> <span>All live products are straightforward and easy to explain</span></label>
+        <div class="pass-condition">Pass condition: launch monetization is simple, readable, and low-risk.</div>
+    </div>
+
+    <div class="task-group">
+        <div class="task-title">10) You know the top 3 launch risks</div>
+        <div class="task-desc">Before launch, force yourselves to write these down:</div>
+        <label><input type="checkbox" id="imp10-1"> <span>We know the most likely reason players leave in the first session</span></label>
+        <label><input type="checkbox" id="imp10-2"> <span>We know the biggest economy risk</span></label>
+        <label><input type="checkbox" id="imp10-3"> <span>We know the biggest monetization/UI risk</span></label>
+        <div class="pass-condition">Pass condition: you can name the 3 biggest threats without hesitating.</div>
+    </div>
+
+    <h2 style="color: #e6edf3;">Final launch decision</h2>
+    <div class="decision-block">
+        <div class="card green">
+            <h3 style="color: #238636;">🟢 Green light</h3>
+            <p style="font-size: 0.9em;">Launch if:</p>
+            <ul style="font-size: 0.9em; padding-left: 15px; color: #8b949e;">
+                <li>all Hard Blockers pass</li>
+                <li>Important section has 0–1 fails</li>
+                <li>no fail involves saving, purchases, permissions, or first-session clarity</li>
+            </ul>
+        </div>
+        <div class="card yellow">
+            <h3 style="color: #d29922;">🟡 Yellow light</h3>
+            <p style="font-size: 0.9em;">Delay 1–3 days if:</p>
+            <ul style="font-size: 0.9em; padding-left: 15px; color: #8b949e;">
+                <li>any monetization product misgrants</li>
+                <li>the new group-owned universe still has mismatched IDs</li>
+                <li>players are confused in the first 10 minutes</li>
+                <li>the economy still clearly snowballs or clearly stalls</li>
+            </ul>
+        </div>
+        <div class="card red">
+            <h3 style="color: #f85149;">🔴 Red light</h3>
+            <p style="font-size: 0.9em;">Do not launch if:</p>
+            <ul style="font-size: 0.9em; padding-left: 15px; color: #8b949e;">
+                <li>any paid item is unreliable</li>
+                <li>the save system is unstable</li>
+                <li>the wrong experience IDs/products are wired</li>
+                <li>first-time players do not understand the loop</li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-database-compat.js"></script>
+
+<script>
+    // Your exact config keys
+    const firebaseConfig = {
+        apiKey: "AIzaSyAmJbJoVleAG0DDlKJcpFgxOvlUT2FZsqo",
+        authDomain: "cab-launchpad.firebaseapp.com",
+        databaseURL: "https://cab-launchpad-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "cab-launchpad",
+        storageBucket: "cab-launchpad.firebasestorage.app",
+        messagingSenderId: "502591312825",
+        appId: "1:502591312825:web:20a9e74a927c5aa7b55c68"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+    const checklistRef = db.ref('solocked-launch-checklist');
+    const statusText = document.getElementById('connection-status');
+
+    // Setup connection state listener
+    const connectedRef = db.ref('.info/connected');
+    connectedRef.on('value', (snap) => {
+        if (snap.val() === true) {
+            statusText.innerText = "🟢 Database Connected & Live Sync Active";
+            statusText.style.color = "#238636";
+        } else {
+            statusText.innerText = "🔴 Disconnected from Database. Changes won't sync.";
+            statusText.style.color = "#f85149";
+        }
+    });
+
+    // 1. LISTEN for changes from the database (Sync Down)
+    checklistRef.on('value', (snapshot) => {
+        const data = snapshot.val();
+        if (data) {
+            for (const [id, isChecked] of Object.entries(data)) {
+                const checkbox = document.getElementById(id);
+                if (checkbox) {
+                    checkbox.checked = isChecked;
+                    if (isChecked) {
+                        checkbox.nextElementSibling.classList.add('checked-text');
+                    } else {
+                        checkbox.nextElementSibling.classList.remove('checked-text');
+                    }
+                }
+            }
+        }
+    });
+
+    // 2. SEND changes to the database when a box is clicked (Sync Up)
+    document.querySelectorAll('input[type="checkbox"]').forEach(box => {
+        box.addEventListener('change', function() {
+            // Instantly apply visual strikethrough locally
+            if(this.checked) {
+                this.nextElementSibling.classList.add('checked-text');
+            } else {
+                this.nextElementSibling.classList.remove('checked-text');
+            }
+            
+            // Push update to Firebase
+            db.ref('solocked-launch-checklist/' + this.id).set(this.checked).catch((error) => {
+                console.error("Firebase write failed:", error);
+                alert("Failed to sync to database. Check your internet connection.");
+            });
+        });
+    });
+</script>
+
+</body>
+</html>
