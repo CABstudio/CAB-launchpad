@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Launch Control: enjinn66</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0d1117; color: #c9d1d9; padding: 40px; line-height: 1.6; }
+        .container { max-width: 800px; margin: auto; background: #161b22; padding: 30px; border-radius: 10px; border: 1px solid #30363d; }
+        h1 { color: #58a6ff; text-align: center; text-transform: uppercase; letter-spacing: 2px; }
+        h2 { color: #ff7b72; border-bottom: 1px solid #30363d; padding-bottom: 10px; margin-top: 30px; }
+        h2.important { color: #d2a8ff; }
+        .task-group { margin-bottom: 25px; }
+        .task-title { font-weight: bold; font-size: 1.1em; margin-bottom: 10px; color: #e6edf3; }
+        .criteria { font-size: 0.9em; color: #8b949e; margin-bottom: 10px; font-style: italic; }
+        label { display: flex; align-items: flex-start; margin-bottom: 8px; cursor: pointer; padding: 5px; border-radius: 5px; transition: background 0.2s; }
+        label:hover { background: #21262d; }
+        input[type="checkbox"] { margin-top: 5px; margin-right: 15px; width: 18px; height: 18px; accent-color: #238636; cursor: pointer; }
+        .checked-text { text-decoration: line-through; color: #8b949e; }
+        .status { text-align: center; margin-bottom: 20px; font-size: 0.9em; color: #8b949e; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Pre-Launch Flight Check</h1>
+    <p class="status" id="connection-status">Connecting to database...</p>
+    <p style="text-align: center; color: #8b949e;">Launch only if every Hard Blocker passes. Max 1 fail in Important section.</p>
+
+    <h2>Hard Blockers</h2>
+    
+    <div class="task-group">
+        <div class="task-title">1. New group-owned universe is fully wired</div>
+        <label><input type="checkbox" id="hb1-1"> <span>All developer product IDs point to new experience</span></label>
+        <label><input type="checkbox" id="hb1-2"> <span>All game pass IDs point to new experience</span></label>
+        <label><input type="checkbox" id="hb1-3"> <span>All VIP checks work</span></label>
+        <label><input type="checkbox" id="hb1-4"> <span>Private server settings configured</span></label>
+        <label><input type="checkbox" id="hb1-5"> <span>Max players = 6</span></label>
+        <label><input type="checkbox" id="hb1-6"> <span>No old universe IDs remain anywhere</span></label>
+        <label><input type="checkbox" id="hb1-7"> <span>enjinn66 has full edit/publish permissions</span></label>
+    </div>
+
+    <div class="task-group">
+        <div class="task-title">2. Monetization works end-to-end</div>
+        <div class="criteria">Zero misgrants, zero duplicate grants, zero "paid but didn't get it" cases.</div>
+        <label><input type="checkbox" id="hb2-1"> <span>Purchase prompt appears correctly for all items</span></label>
+        <label><input type="checkbox" id="hb2-2"> <span>Product grants correct reward once only</span></label>
+        <label><input type="checkbox" id="hb2-3"> <span>Rejoining does not duplicate or remove it</span></label>
+        <label><input type="checkbox" id="hb2-4"> <span>Rebirth interaction works as intended</span></label>
+        <label><input type="checkbox" id="hb2-5"> <span>Server hop does not break reward</span></label>
+        <label><input type="checkbox" id="hb2-6"> <span>Cancelled purchase grants nothing</span></label>
+    </div>
+
+    <h2 class="important">Important</h2>
+
+    <div class="task-group">
+        <div class="task-title">5. Claw locks and gates are readable</div>
+        <label><input type="checkbox" id="imp5-1"> <span>Locked claws clearly show price & rebirth reqs</span></label>
+        <label><input type="checkbox" id="imp5-2"> <span>Unique brainrot requirements are visible</span></label>
+        <label><input type="checkbox" id="imp5-3"> <span>Players understand why it's locked & how to unlock</span></label>
+    </div>
+
+    <div class="task-group">
+        <div class="task-title">10. Top 3 Launch Risks Known</div>
+        <label><input type="checkbox" id="imp10-1"> <span>We
